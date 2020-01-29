@@ -13,7 +13,7 @@ public class ThreadDemo extends Thread {
     private Thread t;
     private String threadName;
 
-    ThreadDemo(String name) {
+    public ThreadDemo(String name) {
         threadName = name;
         log.info("Createing {}", threadName);
     }

@@ -15,7 +15,7 @@ public class RunnableDemo implements Runnable {
     private Thread t;
     private String threadName;
 
-    RunnableDemo(String name) {
+    public RunnableDemo(String name) {
         threadName = name;
         log.info("Creating {}", threadName);
     }
