@@ -1,0 +1,29 @@
+package com.wb.pro.vo;
+
+/**
+ * @author: WangBin
+ * @create: 2020-01-29 21:13
+ **/
+public class SynchronizedSupend {
+    private String username = "1";
+    private String password = "11";
+
+    /**
+     * 使用suspend会导致数据不同步
+     *
+     * @param u
+     * @param p
+     */
+    public void setValue(String u, String p) {
+        this.username = u;
+        if (Thread.currentThread().getName().equals("a")) {
+            System.out.println("停止a线程");
+            Thread.currentThread().suspend();
+        }
+        this.password = p;
+    }
+
+    public void printString() {
+        System.out.println(username + "---" + password);
+    }
+}
