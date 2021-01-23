@@ -24,6 +24,14 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     compile("com.alibaba:druid:1.1.21")
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
+
+    compile group: 'org.apache.poi', name: 'poi', version: '4.1.2'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
+    compile group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '4.1.2'
+    compile group: 'org.apache.poi', name: 'poi-scratchpad', version: '4.1.2'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.12.2'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
     // lombok
     compileOnly('org.projectlombok:lombok')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
