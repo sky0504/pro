@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.lang.reflect.Field;
+import java.util.logging.FileHandler;
+
 /**
  * @author wangbin
  * @date 2021/2/16 15:42
@@ -36,6 +39,21 @@ public class ErrorHandleConfig {
         BindingResult bindingResult = e.getBindingResult();
         FieldError error = bindingResult.getFieldError();
 //        bindingResult.getAllErrors()  所有错误信息
+        //找不到其他方法，暂时先去取对象中的某个字段的值吧
+        Boolean t = null;
+        try {
+            Field field = e.getBindingResult().getTarget().getClass().getDeclaredField("t");
+            field.setAccessible(true);
+            try {
+                t = (Boolean) field.get(e.getBindingResult().getTarget());
+            } catch (IllegalAccessException illegalAccessException) {
+                log.error("IllegalAccessException");
+            }
+        } catch (NoSuchFieldException noSuchFieldException) {
+            log.error("NoSuchFieldException");
+        }
+        log.info("res {}", t);
+
         StringBuilder sb = new StringBuilder();
         sb.append("参数").append(error.getField()).append(error.getDefaultMessage());
         String msg = sb.toString();

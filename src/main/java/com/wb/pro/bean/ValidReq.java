@@ -15,6 +15,7 @@ import java.util.Date;
  */
 @Data
 public class ValidReq {
+    private boolean t = true;
 
     @NotNull(message = "唯一ID不能为空")
     private Long id;
