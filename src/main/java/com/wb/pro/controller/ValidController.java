@@ -1,8 +1,14 @@
 package com.wb.pro.controller;
 
+import com.wb.pro.bean.ValidReq;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * @author wangbin
@@ -11,7 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ValidController {
     @GetMapping("/valid/index")
-    public String validIndex(@RequestParam("id") String id,@RequestParam("name")String name) {
+    public String validIndex(@RequestParam("id") String id, @RequestParam("name") String name) {
         return id;
+    }
+
+    @GetMapping("/valid/post")
+    public String validPost(@Valid @RequestBody ValidReq req, Errors errors) {
+        StringBuilder sb = new StringBuilder();
+        if (errors.hasErrors()) {
+            for (FieldError error : errors.getFieldErrors()) {
+                sb.append(error.getField() + "-" + error.getDefaultMessage());
+            }
+        }
+        return sb.toString();
     }
 }
