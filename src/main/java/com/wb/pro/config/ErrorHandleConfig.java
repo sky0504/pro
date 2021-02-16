@@ -35,15 +35,10 @@ public class ErrorHandleConfig {
     public Object handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
         FieldError error = bindingResult.getFieldError();
+//        bindingResult.getAllErrors()  所有错误信息
         StringBuilder sb = new StringBuilder();
-        sb.append("参数")
-                .append(error.getField())
-                .append(error.getDefaultMessage());
-        // 生成返回结果
-        log.error("Service method argument valid have exception {}", sb.toString());
-
-        String code = "1005";
+        sb.append("参数").append(error.getField()).append(error.getDefaultMessage());
         String msg = sb.toString();
-        return new Response<>(code, msg, null);
+        return new Response<>("400", msg, null);
     }
 }

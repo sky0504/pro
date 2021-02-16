@@ -22,13 +22,7 @@ public class ValidController {
     }
 
     @GetMapping("/valid/post")
-    public String validPost(@Valid @RequestBody ValidReq req, Errors errors) {
-        StringBuilder sb = new StringBuilder();
-        if (errors.hasErrors()) {
-            for (FieldError error : errors.getFieldErrors()) {
-                sb.append(error.getField() + "-" + error.getDefaultMessage());
-            }
-        }
-        return sb.toString();
+    public String validPost(@Valid @RequestBody ValidReq req) {
+        return req.toString();
     }
 }
