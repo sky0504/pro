@@ -18,8 +18,8 @@ public class ProductListTest {
         ProductListJdObserver jdObserver = new ProductListJdObserver();
         ProductListTbObserver tbObserver = new ProductListTbObserver();
         //添加观察者
-        productList.addObserver(jdObserver);
-        productList.addObserver(tbObserver);
+        productList.addProductListObserver(jdObserver);
+        productList.addProductListObserver(tbObserver);
         productList.addProduct("西瓜");
     }
 }
