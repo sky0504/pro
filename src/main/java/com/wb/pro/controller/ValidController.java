@@ -22,7 +22,7 @@ public class ValidController {
     }
 
     @GetMapping("/valid/post")
-    public String validPost(@Valid @RequestBody ValidReq req) {
-        return req.toString();
+    public Object validPost(@Valid @RequestBody ValidReq req) {
+        return req;
     }
 }

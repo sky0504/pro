@@ -1,5 +1,9 @@
 package com.wb.pro.bean;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.wb.pro.serializer.DoubleJsonSerializer;
+import com.wb.pro.serializer.IntegerDeserializer;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -30,4 +34,8 @@ public class ValidReq {
     @Max(100)
     @NotNull(message = "大小不能为空")
     private Integer num;
+
+    @JsonDeserialize(using = IntegerDeserializer.class)
+    @JsonSerialize(using = DoubleJsonSerializer.class)
+    private Integer amount;
 }

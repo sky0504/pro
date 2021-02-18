@@ -32,6 +32,8 @@ dependencies {
     compile group: 'org.jsoup', name: 'jsoup', version: '1.12.2'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
 
+    compile group: 'io.github.wnjustdoit', name: 'pinyin4j', version: '2.6.0'
+
     // lombok
     compileOnly('org.projectlombok:lombok')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
