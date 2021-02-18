@@ -1,12 +1,11 @@
 package com.wb.pro.controller;
 
 import com.wb.pro.bean.ValidReq;
+import com.wb.pro.config.RoleException;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -22,7 +21,16 @@ public class ValidController {
     }
 
     @GetMapping("/valid/post")
-    public Object validPost(@Valid @RequestBody ValidReq req) {
+    public Object validPost(@Valid @RequestBody ValidReq req, Model model) {
+        req.setName(model.asMap().containsKey("projectName") ? model.asMap().get("projectName").toString() : "default");
         return req;
+    }
+
+    @GetMapping("/valid/error")
+    public Object validPost(@RequestParam("id") String id) {
+        if ("1".equals(id)) {
+            throw new RoleException();
+        }
+        return null;
     }
 }

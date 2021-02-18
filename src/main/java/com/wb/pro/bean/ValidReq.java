@@ -1,5 +1,6 @@
 package com.wb.pro.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wb.pro.serializer.DoubleJsonSerializer;
@@ -19,6 +20,7 @@ import java.util.Date;
  */
 @Data
 public class ValidReq {
+    @JsonIgnore
     private boolean t = true;
 
     @NotNull(message = "唯一ID不能为空")
@@ -38,4 +40,6 @@ public class ValidReq {
     @JsonDeserialize(using = IntegerDeserializer.class)
     @JsonSerialize(using = DoubleJsonSerializer.class)
     private Integer amount;
+
+    private String name;
 }
