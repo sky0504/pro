@@ -22,4 +22,11 @@ public class XmlDto {
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "parameter")
     private List<XmlParamDto> parameter;
+
+    /**
+     * 所需要的参数信息列表
+     */
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @JacksonXmlProperty(localName = "field")
+    private List<XmlFiledDto> field;
 }

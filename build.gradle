@@ -36,6 +36,13 @@ dependencies {
     compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml'
     compile group: 'io.github.wnjustdoit', name: 'pinyin4j', version: '2.6.0'
 
+    compile('com.lowagie:itext:2.1.7')
+    compile files("libs/fonts.jar")
+    compile files("libs/font_songti.jar")
+    compile('com.itextpdf:itext-asian:5.2.0')
+    compile("net.sf.jasperreports:jasperreports-fonts:6.0.0")
+    compile('net.sf.jasperreports:jasperreports:6.4.3')
+
     // lombok
     compileOnly('org.projectlombok:lombok')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

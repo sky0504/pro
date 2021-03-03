@@ -1,12 +1,12 @@
 package com.wb.pro.util;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.converter.PicturesManager;
-import org.apache.poi.hwpf.converter.WordToHtmlConverter;
-import org.apache.poi.hwpf.usermodel.Picture;
-import org.apache.poi.hwpf.usermodel.PictureType;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
+//import org.apache.poi.hwpf.HWPFDocument;
+//import org.apache.poi.hwpf.converter.PicturesManager;
+//import org.apache.poi.hwpf.converter.WordToHtmlConverter;
+//import org.apache.poi.hwpf.usermodel.Picture;
+//import org.apache.poi.hwpf.usermodel.PictureType;
+//import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilderFactory;

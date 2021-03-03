@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wb.pro.config.RoleException;
 import com.wb.pro.controller.ValidController;
+import com.wb.pro.util.ExceptionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -41,7 +42,8 @@ public class ValidControllerAdvice {
     }
 
     @ExceptionHandler(Exception.class)
-    public String exception() {
+    public String exception(Exception ex) {
+        log.error("{}", ExceptionUtils.exceptionStackTraceAsString(ex));
         log.info("在该控制器方法出现Exception错误的时候的处理");
         return "exception";
     }
