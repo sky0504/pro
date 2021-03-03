@@ -12,6 +12,7 @@ sourceCompatibility = '1.8'
 repositories {
 
     mavenLocal()
+    maven { url "http://192.68.75.68:8081/nexus/content/groups/public/" }
     maven {
         //阿里的仓库
         url 'http://maven.aliyun.com/mvn/repository/'
@@ -25,13 +26,14 @@ dependencies {
     compile("com.alibaba:druid:1.1.21")
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
 
-    compile group: 'org.apache.poi', name: 'poi', version: '4.1.2'
-    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
-    compile group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '4.1.2'
-    compile group: 'org.apache.poi', name: 'poi-scratchpad', version: '4.1.2'
-    compile group: 'org.jsoup', name: 'jsoup', version: '1.12.2'
+//    compile group: 'org.apache.poi', name: 'poi', version: '4.1.2'
+//    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
+//    compile group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '4.1.2'
+//    compile group: 'org.apache.poi', name: 'poi-scratchpad', version: '4.1.2'
+//    compile group: 'org.jsoup', name: 'jsoup', version: '1.12.2'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
 
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml'
     compile group: 'io.github.wnjustdoit', name: 'pinyin4j', version: '2.6.0'
 
     // lombok
