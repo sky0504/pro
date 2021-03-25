@@ -16,4 +16,9 @@ public interface Human {
      * 说话
      */
     void talk();
+
+    /**
+     * 获取性别
+     */
+    void getSex();
 }

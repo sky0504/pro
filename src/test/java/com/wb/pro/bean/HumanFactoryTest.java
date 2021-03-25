@@ -1,6 +1,8 @@
 package com.wb.pro.bean;
 
 import com.wb.pro.bean.pattern.factory.*;
+import com.wb.pro.bean.pattern.factory.abstractfac.FemaleHumanFactory;
+import com.wb.pro.bean.pattern.factory.abstractfac.MaleHumanFactory;
 import org.junit.Test;
 
 /**
@@ -38,5 +40,23 @@ public class HumanFactoryTest {
         Human yellowMan = HumanFactory1.createHuman(YellowHuman.class);
         yellowMan.getColor();
         yellowMan.talk();
+    }
+
+    @Test
+    public void createAbstractHuman1Test() {
+
+        com.wb.pro.bean.pattern.factory.abstractfac.HumanFactory maleHumanFactory = new MaleHumanFactory();
+        com.wb.pro.bean.pattern.factory.abstractfac.HumanFactory femaleHumanFactory = new FemaleHumanFactory();
+
+        Human maleYellowHuman = maleHumanFactory.createYellowMan();
+        Human femaleYellowHuman = femaleHumanFactory.createYellowMan();
+
+        maleYellowHuman.getSex();
+        maleYellowHuman.getColor();
+        maleYellowHuman.talk();
+
+        femaleYellowHuman.getSex();
+        femaleYellowHuman.getColor();
+        femaleYellowHuman.talk();
     }
 }
