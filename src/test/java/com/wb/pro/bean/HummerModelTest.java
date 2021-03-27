@@ -16,5 +16,8 @@ public class HummerModelTest {
 
         Hummer2Model h2 = new Hummer2Model();
         h2.run();
+
+        h2.setAlarmFlag(false);
+        h2.run();
     }
 }

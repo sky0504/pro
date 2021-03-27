@@ -29,9 +29,4 @@ public class Hummer2Model extends HummerModel {
     protected void engineBoom() {
         log.info("悍马2引擎响起来啦");
     }
-
-    @Override
-    protected boolean isAlarm() {
-        return false;
-    }
 }

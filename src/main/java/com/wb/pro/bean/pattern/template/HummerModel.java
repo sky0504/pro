@@ -8,6 +8,11 @@ package com.wb.pro.bean.pattern.template;
  */
 public abstract class HummerModel {
     /**
+     * 要响喇叭
+     */
+    private boolean alarmFlag = true;
+
+    /**
      * 启动
      */
     protected abstract void start();
@@ -45,6 +50,10 @@ public abstract class HummerModel {
      * @return
      */
     protected boolean isAlarm() {
-        return true;
+        return this.alarmFlag;
+    }
+
+    public void setAlarmFlag(boolean isAlarm) {
+        this.alarmFlag = isAlarm;
     }
 }
