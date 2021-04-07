@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -31,9 +33,14 @@ public class XmlController {
 
     @GetMapping("/xml")
     public void xml(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
-        String path = "/Volumes/Work/work/gratone/code/seeing/report/src/main/resources/jasper/" + name + ".jrxml";
-        File file = new File(path);
-        FileInputStream fileInputStream = new FileInputStream(file);
+
+//        FileInputStream fileInputStream = new FileInputStream(file);
+        InputStream fileInputStream = xml();
+        if (!"1".equals(name)) {
+            String path = "/Volumes/Work/work/gratone/code/seeing/report/src/main/resources/jasper/" + name + ".jrxml";
+            File file = new File(path);
+            fileInputStream = new FileInputStream(file);
+        }
         JacksonXmlModule module = new JacksonXmlModule();
         XmlMapper mapper = new XmlMapper(module);
         XmlDto xmlDto = mapper.readValue(fileInputStream, XmlDto.class);
@@ -153,10 +160,14 @@ public class XmlController {
         }
         log.info("{}", objectMapper.writeValueAsString(objectMap));
         log.info("{}", objectMapper.writeValueAsString(list));
-        File file1 = new File(path);
-        FileInputStream fileInputStream1 = new FileInputStream(file1);
+        InputStream fileInputStream1 = xml();
+        if (!"1".equals(name)) {
+            String path = "/Volumes/Work/work/gratone/code/seeing/report/src/main/resources/jasper/" + name + ".jrxml";
+            File file1 = new File(path);
+            fileInputStream1 = new FileInputStream(file1);
+        }
         JasperDesign jdesign = JRXmlLoader.load(fileInputStream1);
-        ReportExportUtil.exportHtml(jdesign, objectMap, list, response);
+        ReportExportUtil.exportHtmlWithImages(jdesign, objectMap, list, response);
     }
 
     private String getStr(int num) {
@@ -171,6 +182,345 @@ public class XmlController {
             charValue.append(str.charAt(number));
         }
         return charValue.toString();
+    }
+
+
+    private InputStream xml() {
+        String str = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->\n" +
+                "<jasperReport xmlns=\"http://jasperreports.sourceforge.net/jasperreports\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd\" name=\"Blank_A4\" pageWidth=\"420\" pageHeight=\"595\" columnWidth=\"380\" leftMargin=\"20\" rightMargin=\"20\" topMargin=\"20\" bottomMargin=\"20\" uuid=\"3dd61875-28d0-4e61-a235-1eb8768bf621\">\n" +
+                "\t<property name=\"com.jaspersoft.studio.data.defaultdataadapter\" value=\"One Empty Record\"/>\n" +
+                "\t<property name=\"com.jaspersoft.studio.unit.\" value=\"pixel\"/>\n" +
+                "\t<property name=\"com.jaspersoft.studio.unit.pageHeight\" value=\"pixel\"/>\n" +
+                "\t<property name=\"com.jaspersoft.studio.unit.pageWidth\" value=\"pixel\"/>\n" +
+                "\t<property name=\"com.jaspersoft.studio.unit.topMargin\" value=\"pixel\"/>\n" +
+                "\t<property name=\"com.jaspersoft.studio.unit.bottomMargin\" value=\"pixel\"/>\n" +
+                "\t<property name=\"com.jaspersoft.studio.unit.leftMargin\" value=\"pixel\"/>\n" +
+                "\t<property name=\"com.jaspersoft.studio.unit.rightMargin\" value=\"pixel\"/>\n" +
+                "\t<property name=\"com.jaspersoft.studio.unit.columnWidth\" value=\"pixel\"/>\n" +
+                "\t<property name=\"com.jaspersoft.studio.unit.columnSpacing\" value=\"pixel\"/>\n" +
+                "\t<subDataset name=\"DataListCustom\" uuid=\"51db6226-597e-4a5d-8dc7-9e9f12d87c92\">\n" +
+                "\t\t<queryString>\n" +
+                "\t\t\t<![CDATA[]]>\n" +
+                "\t\t</queryString>\n" +
+                "\t</subDataset>\n" +
+                "\t<parameter name=\"patiName\" class=\"java.lang.String\"/>\n" +
+                "\t<parameter name=\"patiPhone\" class=\"java.lang.String\"/>\n" +
+                "\t<queryString>\n" +
+                "\t\t<![CDATA[]]>\n" +
+                "\t</queryString>\n" +
+                "\t<background>\n" +
+                "\t\t<band splitType=\"Stretch\"/>\n" +
+                "\t</background>\n" +
+                "\t<title>\n" +
+                "\t\t<band height=\"79\" splitType=\"Stretch\"/>\n" +
+                "\t</title>\n" +
+                "\t<pageHeader>\n" +
+                "\t\t<band height=\"50\"/>\n" +
+                "\t</pageHeader>\n" +
+                "\t<columnHeader>\n" +
+                "\t\t<band height=\"61\" splitType=\"Stretch\"/>\n" +
+                "\t</columnHeader>\n" +
+                "\t<detail>\n" +
+                "\t\t<band height=\"176\" splitType=\"Stretch\">\n" +
+                "\t\t\t<staticText>\n" +
+                "\t\t\t\t<reportElement x=\"70\" y=\"29\" width=\"100\" height=\"30\" uuid=\"00ef2362-2255-4a3b-bb15-b1bd76c97589\"/>\n" +
+                "\t\t\t\t<text><![CDATA[测试]]></text>\n" +
+                "\t\t\t</staticText>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"170\" y=\"29\" width=\"100\" height=\"30\" uuid=\"77c8d630-5f3a-4d84-a820-c6c2464c847b\"/>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[$P{patiName}]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t\t<staticText>\n" +
+                "\t\t\t\t<reportElement x=\"60\" y=\"101\" width=\"100\" height=\"30\" uuid=\"f74cbf85-d7a1-4cf7-828b-5fd44e7a92e3\"/>\n" +
+                "\t\t\t\t<text><![CDATA[测试页脚]]></text>\n" +
+                "\t\t\t</staticText>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"160\" y=\"101\" width=\"100\" height=\"30\" uuid=\"d56ddbcd-7309-4d00-8d0c-8f4dbfb8cabf\"/>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[$P{patiPhone}]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t</band>\n" +
+                "\t</detail>\n" +
+                "\t<columnFooter>\n" +
+                "\t\t<band height=\"45\" splitType=\"Stretch\"/>\n" +
+                "\t</columnFooter>\n" +
+                "\t<pageFooter>\n" +
+                "\t\t<band height=\"50\"/>\n" +
+                "\t</pageFooter>\n" +
+                "\t<summary>\n" +
+                "\t\t<band height=\"42\" splitType=\"Stretch\"/>\n" +
+                "\t</summary>\n" +
+                "</jasperReport>\n";
+
+        String str1="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->\n" +
+                "<jasperReport xmlns=\"http://jasperreports.sourceforge.net/jasperreports\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd\" name=\"book\" pageWidth=\"595\" pageHeight=\"842\" columnWidth=\"555\" leftMargin=\"20\" rightMargin=\"20\" topMargin=\"20\" bottomMargin=\"20\" uuid=\"1301cd64-03d8-4071-b530-1eba5abb52f8\">\n" +
+                "\t<property name=\"com.jaspersoft.studio.data.defaultdataadapter\" value=\"One Empty Record\"/>\n" +
+                "\t<property name=\"net.sf.jasperreports.export.pdf.force.linebreak.policy\" value=\"true\"/>\n" +
+                "\t<parameter name=\"hospital\" class=\"java.lang.String\"/>\n" +
+                "\t<parameter name=\"department\" class=\"java.lang.String\"/>\n" +
+                "\t<parameter name=\"date\" class=\"java.lang.String\"/>\n" +
+                "\t<parameter name=\"personNum\" class=\"java.lang.String\"/>\n" +
+                "\t<queryString>\n" +
+                "\t\t<![CDATA[]]>\n" +
+                "\t</queryString>\n" +
+                "\t<field name=\"patiName\" class=\"java.lang.String\"/>\n" +
+                "\t<field name=\"patiGender\" class=\"java.lang.String\"/>\n" +
+                "\t<field name=\"patiPhone\" class=\"java.lang.String\"/>\n" +
+                "\t<field name=\"patiIdNumber\" class=\"java.lang.String\"/>\n" +
+                "\t<field name=\"visiSerialno\" class=\"java.lang.String\"/>\n" +
+                "\t<background>\n" +
+                "\t\t<band splitType=\"Stretch\"/>\n" +
+                "\t</background>\n" +
+                "\t<title>\n" +
+                "\t\t<band height=\"91\" splitType=\"Stretch\">\n" +
+                "\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "<staticText>\n" +
+                "\t\t\t\t<reportElement x=\"-20\" y=\"20\" width=\"100\" height=\"20\" uuid=\"00ef2362-2255-4a3b-bb15-b1bd76c97589\"/>\n" +
+                "\t\t\t\t<text><![CDATA[测试]]></text>\n" +
+                "\t\t\t</staticText>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"-20\" y=\"20\" width=\"100\" height=\"20\" uuid=\"77c8d630-5f3a-4d84-a820-c6c2464c847b\"/>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[$P{department}]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"-20\" y=\"0\" width=\"595\" height=\"30\" uuid=\"ac6206f1-3b24-4123-9988-6b01c405afc4\"/>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Center\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"22\" isBold=\"true\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[$P{hospital}]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"30\" y=\"70\" width=\"100\" height=\"16\" uuid=\"bcfb3368-be92-4342-82b3-213b7b926508\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<textElement>\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[$P{department}]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t\t<staticText>\n" +
+                "\t\t\t\t<reportElement x=\"0\" y=\"70\" width=\"30\" height=\"16\" uuid=\"6cca89b7-8476-43b0-9d28-e69defe44b99\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Right\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<text><![CDATA[科室:]]></text>\n" +
+                "\t\t\t</staticText>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"237\" y=\"70\" width=\"100\" height=\"16\" uuid=\"c277f92c-f4c2-4df0-b1a6-cfe8292fe795\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<textElement>\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t\t<staticText>\n" +
+                "\t\t\t\t<reportElement x=\"180\" y=\"70\" width=\"57\" height=\"16\" uuid=\"6083870d-fee9-4e1d-81f7-ff147bba203b\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Right\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<text><![CDATA[日期:]]></text>\n" +
+                "\t\t\t</staticText>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"530\" y=\"70\" width=\"45\" height=\"16\" uuid=\"4e971050-6578-48ef-8559-96e0b03c8980\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<textElement>\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[$P{personNum}]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t\t<staticText>\n" +
+                "\t\t\t\t<reportElement x=\"480\" y=\"70\" width=\"50\" height=\"16\" uuid=\"89645eeb-d2a6-4caa-84bc-932f078a35d3\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Right\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<text><![CDATA[人数:]]></text>\n" +
+                "\t\t\t</staticText>\n" +
+                "\t\t</band>\n" +
+                "\t</title>\n" +
+                "\t<pageHeader>\n" +
+                "\t\t<band height=\"18\">\n" +
+                "\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+
+
+                "\t\t\t<staticText>\n" +
+                "\t\t\t\t<reportElement mode=\"Opaque\" x=\"0\" y=\"0\" width=\"80\" height=\"18\" backcolor=\"#E0D6D5\" uuid=\"26a16cd3-fcf5-418b-85be-64f350c8c26b\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<box>\n" +
+                "\t\t\t\t\t<pen lineWidth=\"1.0\" lineStyle=\"Solid\"/>\n" +
+                "\t\t\t\t</box>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Center\" verticalAlignment=\"Middle\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<text><![CDATA[姓名]]></text>\n" +
+                "\t\t\t</staticText>\n" +
+                "\t\t\t<staticText>\n" +
+                "\t\t\t\t<reportElement mode=\"Opaque\" x=\"80\" y=\"0\" width=\"80\" height=\"18\" backcolor=\"#E0D6D5\" uuid=\"fab04e2d-d9b3-45ac-826f-c64f2015e0aa\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<box>\n" +
+                "\t\t\t\t\t<pen lineWidth=\"1.0\" lineStyle=\"Solid\"/>\n" +
+                "\t\t\t\t</box>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Center\" verticalAlignment=\"Middle\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<text><![CDATA[性别]]></text>\n" +
+                "\t\t\t</staticText>\n" +
+                "\t\t\t<staticText>\n" +
+                "\t\t\t\t<reportElement mode=\"Opaque\" x=\"160\" y=\"0\" width=\"120\" height=\"18\" backcolor=\"#E0D6D5\" uuid=\"90623b68-fdb0-4b29-8780-46efd63e927b\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<box>\n" +
+                "\t\t\t\t\t<pen lineWidth=\"1.0\" lineStyle=\"Solid\"/>\n" +
+                "\t\t\t\t</box>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Center\" verticalAlignment=\"Middle\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<text><![CDATA[手机号]]></text>\n" +
+                "\t\t\t</staticText>\n" +
+                "\t\t\t<staticText>\n" +
+                "\t\t\t\t<reportElement mode=\"Opaque\" x=\"280\" y=\"0\" width=\"180\" height=\"18\" backcolor=\"#E0D6D5\" uuid=\"063b191d-4484-4be8-9f82-534915128f3b\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<box>\n" +
+                "\t\t\t\t\t<pen lineWidth=\"1.0\" lineStyle=\"Solid\"/>\n" +
+                "\t\t\t\t</box>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Center\" verticalAlignment=\"Middle\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<text><![CDATA[身份证]]></text>\n" +
+                "\t\t\t</staticText>\n" +
+                "\t\t\t<staticText>\n" +
+                "\t\t\t\t<reportElement mode=\"Opaque\" x=\"460\" y=\"0\" width=\"100\" height=\"18\" backcolor=\"#E0D6D5\" uuid=\"c4f18fab-4e33-45f2-9485-aecefb29270a\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<box>\n" +
+                "\t\t\t\t\t<pen lineWidth=\"1.0\" lineStyle=\"Solid\"/>\n" +
+                "\t\t\t\t</box>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Center\" verticalAlignment=\"Middle\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<text><![CDATA[就诊序号]]></text>\n" +
+                "\t\t\t</staticText>\n" +
+                "\t\t</band>\n" +
+                "\t</pageHeader>\n" +
+                "\t<detail>\n" +
+                "\t\t<band height=\"18\" splitType=\"Stretch\">\n" +
+                "\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"0\" y=\"0\" width=\"80\" height=\"18\" uuid=\"6f32271d-f98c-472d-a7e3-ca866860bf45\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.width\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<box>\n" +
+                "\t\t\t\t\t<pen lineWidth=\"1.0\" lineStyle=\"Solid\"/>\n" +
+                "\t\t\t\t</box>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Center\" verticalAlignment=\"Middle\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[$F{patiName}]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"80\" y=\"0\" width=\"80\" height=\"18\" uuid=\"64dd147a-285c-44b6-be11-30c9e5caa8d3\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.width\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<box>\n" +
+                "\t\t\t\t\t<pen lineWidth=\"1.0\" lineStyle=\"Solid\"/>\n" +
+                "\t\t\t\t</box>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Center\" verticalAlignment=\"Middle\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[$F{patiGender}]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"280\" y=\"0\" width=\"180\" height=\"18\" uuid=\"2a516e7e-5504-4f62-a51b-6c2982c2a280\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.width\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<box>\n" +
+                "\t\t\t\t\t<pen lineWidth=\"1.0\" lineStyle=\"Solid\"/>\n" +
+                "\t\t\t\t</box>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Center\" verticalAlignment=\"Middle\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[$F{patiIdNumber}]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"460\" y=\"0\" width=\"100\" height=\"18\" uuid=\"510ea30a-dccb-4578-b049-f38ccc3ca6f0\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<box>\n" +
+                "\t\t\t\t\t<pen lineWidth=\"1.0\" lineStyle=\"Solid\"/>\n" +
+                "\t\t\t\t</box>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Center\" verticalAlignment=\"Middle\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[$F{visiSerialno}]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"160\" y=\"0\" width=\"120\" height=\"18\" uuid=\"6242a194-8b69-4fd2-94a4-a1ce48b7f11a\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.width\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<box>\n" +
+                "\t\t\t\t\t<pen lineWidth=\"1.0\" lineStyle=\"Solid\"/>\n" +
+                "\t\t\t\t</box>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Center\" verticalAlignment=\"Middle\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"11\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[$F{patiPhone}]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t</band>\n" +
+                "\t</detail>\n" +
+                "\t<pageFooter>\n" +
+                "\t\t<band height=\"50\">\n" +
+                "\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t<textField>\n" +
+                "\t\t\t\t<reportElement x=\"120\" y=\"35\" width=\"160\" height=\"15\" uuid=\"31fa3479-ee29-4a4b-8d90-828becfb911d\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<textElement textAlignment=\"Right\">\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"8\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[\"当前第\"+$V{PAGE_NUMBER}+\"页\"]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t\t<textField evaluationTime=\"Report\">\n" +
+                "\t\t\t\t<reportElement x=\"280\" y=\"35\" width=\"160\" height=\"15\" uuid=\"b0dde845-e40a-47ca-a498-eb28ae995796\">\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.height\" value=\"px\"/>\n" +
+                "\t\t\t\t\t<property name=\"com.jaspersoft.studio.unit.y\" value=\"px\"/>\n" +
+                "\t\t\t\t</reportElement>\n" +
+                "\t\t\t\t<textElement>\n" +
+                "\t\t\t\t\t<font fontName=\"微软雅黑\" size=\"8\" pdfEncoding=\"Identity-H\" isPdfEmbedded=\"true\"/>\n" +
+                "\t\t\t\t</textElement>\n" +
+                "\t\t\t\t<textFieldExpression><![CDATA[\"，共\"+$V{PAGE_NUMBER}+\"页\"]]></textFieldExpression>\n" +
+                "\t\t\t</textField>\n" +
+                "\t\t</band>\n" +
+                "\t</pageFooter>\n" +
+                "</jasperReport>\n";
+
+        InputStream inputStream = new ByteArrayInputStream(str1.getBytes());
+        return inputStream;
     }
 
 

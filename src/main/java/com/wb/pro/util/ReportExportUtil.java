@@ -153,6 +153,9 @@ public class ReportExportUtil {
     }
 
     public static void exportHtml(JasperDesign jdesign, Map params, List data, HttpServletResponse response) throws Exception {
+        if (data != null && data.size() == 0) {
+            data = null;
+        }
         JasperReport jreport = JasperCompileManager.compileReport(jdesign);
         JasperPrint jprint = JasperFillManager.fillReport(jreport, params, new JRBeanCollectionDataSource(data));
         response.setContentType("text/html");
